@@ -48,15 +48,14 @@ def moon_device_status(component_id, device_token, user_token):
         'device-token': device_token,
         'Content-Type': 'application/json'
     }
-
     retries = 3
     while retries > 0:
         try:
             response = requests.get(url, headers=headers)
-            print(f"Response status code: {response.status_code}")
-            print(f"Response text: {response.text}")
-            print(url)
-            print(user_token)
+            #print(f"Response status code: {response.status_code}")
+            #print(f"Response text: {response.text}")
+            #print(url)
+            #print(user_token)
            
             if response.status_code == 200:
                 data = response.json()

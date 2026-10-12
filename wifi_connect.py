@@ -6,7 +6,6 @@ from moon_token import moon_token
 # Define your URLs and tokens
 validate_url = "http://moonhub.moonpreneur.com/LMSService/api/IOT/ValidateDeviceDetails"
 api_url = "http://moonhub.moonpreneur.com/LMSService/api/IOTDevice/GetComponentStatus"
-bearer_token = moon_token("MSJCR0009087", "Aishani123")
 gmail = "nilesh.t+1@moonpreneur.com"
 
 def validate(bearer_token, device_token, gmail):
@@ -53,7 +52,9 @@ def connect_to_wifi(ssid, password, device_token):
         retries -= 1
     if wlan.isconnected():
         print("WiFi connected:", wlan.ifconfig())
+        bearer_token = moon_token("MSJCR0009087", "Aishani123")
         # Call validate function after successful connection
+        print(f"Aishani bearer token {bearer_token} ")
         if not validate(bearer_token, device_token, gmail):
             raise ConnectionError("Validation failed.")
     else:
