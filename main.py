@@ -12,7 +12,7 @@ ssid = "PandoraBox"
 wifi_password = "atithinarayan"
 user_token = "19D043F5-D69B-45A2-96CD-5E1138684B26"
 device_token = "DFFF310A-C004-4132-9D49-2D777AEBEAAD"
-component_id = 1231
+door_component = 1231
 toggle_component_id = 1229
 led_pin = 12 # GPIO Pin for LED (D1)
 
@@ -25,19 +25,16 @@ def main():
     connect_to_wifi(ssid, wifi_password, device_token)
 
     # Step 2: Monitor and update LED state
-    print("Aishani checking toggle_component  ")
     valuesToggle = moon_device_status(toggle_component_id, device_token, user_token)
     previous_led_state = None
     while True:
-      print("Aishani checking component ")
       # Step 2: Check toggle component status
-      values = moon_device_status(component_id, device_token, user_token)
-      door_status = values[0]
-      print(f"Door Status: {values[0]}")
+      door_values = moon_device_status(door_component, device_token, user_token)
+      door_status = door_values[0]
       valuesToggle = moon_device_status(toggle_component_id, device_token, user_token)
       toggle_status = valuesToggle[0]
-      print(f"Toggle Status: {toggle_status}")
       if toggle_status == True and door_status == False:
+        print(f"Status: toggle {toggle_status} door {door_status}")
         print("Unlocking the door...")
         moon_servo_control(lock_servo_pin, 90) # Unlock
         time.sleep(1)
@@ -45,6 +42,7 @@ def main():
         moon_servo_control(door_servo_pin, 0) # Door open
         time.sleep(2)
       if toggle_status == False and door_status == True:
+        print(f"Status: toggle {toggle_status} door {door_status}")
         print("Closing the door...") 
         moon_servo_control(door_servo_pin, 70) # Door closed
         time.sleep(1)
